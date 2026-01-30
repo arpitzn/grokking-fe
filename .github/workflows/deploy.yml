@@ -1,0 +1,58 @@
+name: Build and Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  S3_BUCKET: grokking-hackathon
+  AWS_REGION: ap-south-1
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t grokking-fe:latest .
+
+      - name: Extract dist from Docker
+        run: |
+          # Create a container from the image
+          CONTAINER_ID=$(docker create grokking-fe:latest)
+          
+          # Copy the dist folder from the container
+          docker cp $CONTAINER_ID:/app/dist ./dist
+          
+          # Remove the container
+          docker rm $CONTAINER_ID
+          
+          # Verify dist was extracted
+          ls -la ./dist
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./dist s3://${{ env.S3_BUCKET }} --delete
+          
+      - name: Display deployment info
+        run: |
+          echo "✅ Deployment complete!"
+          echo "📦 S3 Bucket: ${{ env.S3_BUCKET }}"
+          echo "🔗 URL: http://${{ env.S3_BUCKET }}.s3-website-${{ env.AWS_REGION }}.amazonaws.com"
+
