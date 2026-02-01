@@ -28,8 +28,10 @@ export interface ChatStreamEvent {
   content?: string;
   status?: 'completed' | 'error';
   error?: string;
-  event?: 'thinking';
+  event?: 'thinking' | 'escalation';
   phase?: ThinkingPhase;
+  escalation_id?: string;
+  message?: string;
 }
 
 // Knowledge/Document API types

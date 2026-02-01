@@ -89,7 +89,12 @@ export async function streamChat(
                   onThinking?.(parsed.phase, parsed.content || '');
                 }
 
-                // Handle content chunks (only when not a thinking event)
+                // Handle escalation events
+                if (parsed.event === 'escalation' && parsed.message) {
+                  onChunk(parsed.message);
+                }
+
+                // Handle content chunks (only when not a thinking or escalation event)
                 if (parsed.content && !parsed.event) {
                   onChunk(parsed.content);
                 }
