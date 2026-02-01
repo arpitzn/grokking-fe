@@ -35,7 +35,7 @@ jobs:
           CONTAINER_ID=$(docker create grokking-fe:latest)
           
           # Copy the dist folder from the container
-          docker cp $CONTAINER_ID:/app/dist ./dist
+          docker cp $CONTAINER_ID:/usr/src/app/dist ./dist
           
           # Remove the container
           docker rm $CONTAINER_ID
