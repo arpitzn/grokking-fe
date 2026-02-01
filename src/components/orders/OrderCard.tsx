@@ -5,7 +5,7 @@ import { formatThreadDate } from '@/utils/formatters';
 import { Button } from '@/components/ui';
 import { Select } from '@/components/ui';
 import { useAppStore } from '@/store/appStore';
-import type { Order, Zone, Restaurant } from '@/types';
+import type { Order, OrderStatus, Zone, Restaurant } from '@/types';
 
 interface OrderCardProps {
   order: Order;
@@ -143,7 +143,7 @@ export function OrderCard({ order, zones, restaurants }: OrderCardProps) {
           {isEditing ? (
             <Select
               value={editedStatus}
-              onChange={(e) => setEditedStatus(e.target.value)}
+              onChange={(e) => setEditedStatus(e.target.value as OrderStatus)}
               options={statusOptions}
               className="mt-1"
             />
@@ -211,7 +211,7 @@ export function OrderCard({ order, zones, restaurants }: OrderCardProps) {
       {isEditing && (
         <div className="flex items-center gap-2 mt-4 pt-4 border-t border-zinc-200">
           <Button
-            variant="default"
+            variant="primary"
             size="sm"
             onClick={handleSave}
             disabled={isUpdatingOrder}

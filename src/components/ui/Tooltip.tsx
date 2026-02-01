@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
 export interface TooltipProps {
@@ -35,7 +35,6 @@ const badgeArrowColors = {
 
 export function Tooltip({
   filterType,
-  filterValue,
   badgeType,
   children,
   className,

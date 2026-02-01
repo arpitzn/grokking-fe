@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { UserCircle, Check, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useAppStore } from '@/store/appStore';
-import type { SelectedPersona, PersonaType, EndCustomerSubcategory } from '@/types';
+import type { PersonaType, EndCustomerSubcategory } from '@/types';
 import { cn } from '@/utils/cn';
 
 const PERSONA_LABELS: Record<PersonaType, string> = {

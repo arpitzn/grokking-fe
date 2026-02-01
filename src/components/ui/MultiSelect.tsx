@@ -96,11 +96,6 @@ export function MultiSelect({
   // Get selected options with labels
   const selectedOptions = options.filter((opt) => value.includes(opt.value));
 
-  // Helper to get label for a value
-  const getLabel = (val: string) => {
-    return options.find((opt) => opt.value === val)?.label || val;
-  };
-
   // Badge component for selected items
   const Badge = ({
     children,

@@ -89,7 +89,7 @@ export async function deleteFile(
   const params = new URLSearchParams();
   params.append('persona', persona);
   
-  const response = await apiClient.delete(`/knowledge/${userId}/file/${fileIdPart}?${params.toString()}`);
+  const response = await apiClient.delete<{ file_id: string; deleted: number; status: string }>(`/knowledge/${userId}/file/${fileIdPart}?${params.toString()}`);
   return response;
 }
 
@@ -107,7 +107,7 @@ export async function deleteAllFiles(
   params.append('persona', persona);
   params.append('user_id', userId);
   
-  const response = await apiClient.delete(`/knowledge/all?${params.toString()}`);
+  const response = await apiClient.delete<{ deleted: number; status: string }>(`/knowledge/all?${params.toString()}`);
   return response;
 }
 

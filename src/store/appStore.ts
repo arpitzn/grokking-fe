@@ -127,6 +127,8 @@ interface AppState {
   setIsMobile: (isMobile: boolean) => void;
   fetchDocuments: () => Promise<void>;
   uploadDocuments: (files: File[], filters: DocumentFilters) => Promise<KnowledgeUploadResponse[]>;
+  deleteDocument: (fileId: string) => Promise<void>;
+  deleteAllDocuments: () => Promise<void>;
   fetchEscalatedTickets: () => Promise<void>;
   fetchMemories: () => Promise<void>;
   deleteMemory: (memoryId: string, memoryType: MemoryType) => Promise<void>;

@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/Button';
 import {
   CATEGORIES,
   PERSONAS,
-  ISSUE_TYPES,
   ISSUE_TYPE_GROUPS,
   PRIORITIES,
   DOC_WEIGHT_MIN,
   DOC_WEIGHT_MAX,
   DOC_WEIGHT_STEP,
   type DocumentFilters,
+  type IssueType,
   formatCategory,
   formatPersona,
   formatPriority,
@@ -106,7 +106,7 @@ export function FilterForm({ filters, onChange, errors }: FilterFormProps) {
     ([groupName, types]) =>
       types.map((type) => ({
         value: type,
-        label: formatIssueType(type),
+        label: formatIssueType(type as IssueType),
         group: groupName,
       }))
   );

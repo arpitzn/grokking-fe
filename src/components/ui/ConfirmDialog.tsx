@@ -1,6 +1,5 @@
 import { X } from 'lucide-react';
 import { Button } from './Button';
-import { cn } from '@/utils/cn';
 
 export interface ConfirmDialogProps {
   isOpen: boolean;
@@ -87,7 +86,7 @@ export function ConfirmDialog({
         {/* Footer */}
         <div className="flex items-center justify-end gap-2 p-4 border-t border-zinc-200">
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={handleClose}
             disabled={isLoading}
           >

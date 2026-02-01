@@ -1,6 +1,6 @@
 import { apiClient } from './client';
 import { ENDPOINTS } from '@/utils/constants';
-import type { Memory, MemoryType, ApiError } from '@/types';
+import type { Memory, MemoryType } from '@/types';
 
 /**
  * Get all memories for a user

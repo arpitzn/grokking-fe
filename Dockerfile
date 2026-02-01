@@ -2,7 +2,7 @@ FROM node:22.13.0-alpine
 WORKDIR /usr/src/app
 
 # Build arguments for Vite environment variables
-ARG VITE_API_BASE_URL=http://3.6.105.82
+ARG VITE_API_BASE_URL=http://3.6.105.82:8000
 ARG VITE_USER_ID=demo_user
 
 # Set as environment variables for Vite build

@@ -4,7 +4,6 @@ import { Button } from '@/components/ui';
 import { Input } from '@/components/ui';
 import { Select } from '@/components/ui';
 import { useAppStore } from '@/store/appStore';
-import type { Zone, Restaurant } from '@/types';
 
 interface CreateOrderModalProps {
   isOpen: boolean;

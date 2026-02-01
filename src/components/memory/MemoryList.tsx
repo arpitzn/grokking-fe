@@ -51,7 +51,7 @@ export function MemoryList({ memories, onDelete }: MemoryListProps) {
         title="Delete Memory"
         message="Are you sure you want to delete this memory?"
         confirmLabel="Delete"
-        variant="destructive"
+        variant="danger"
       />
     </>
   );

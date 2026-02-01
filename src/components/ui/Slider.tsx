@@ -2,7 +2,7 @@ import { forwardRef, useState, useRef, useEffect } from 'react';
 import { Info } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
-export interface SliderProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface SliderProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
   label?: string;
   required?: boolean;
   helpText?: string;

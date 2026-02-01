@@ -19,6 +19,14 @@ const phaseConfig = {
     icon: Sparkles,
     text: 'Generating response...',
   },
+  memory: {
+    icon: Brain,
+    text: 'Accessing memory...',
+  },
+  planning: {
+    icon: Brain,
+    text: 'Planning response...',
+  },
 };
 
 export function ThinkingIndicator({ phase }: ThinkingIndicatorProps) {

@@ -22,7 +22,7 @@ export function EmptyState({ onCreateOrder }: EmptyStateProps) {
           : 'Orders will appear here once they are created'}
       </p>
       {isEndCustomer && onCreateOrder && (
-        <Button onClick={onCreateOrder} variant="default">
+        <Button onClick={onCreateOrder} variant="primary">
           Create Order
         </Button>
       )}
