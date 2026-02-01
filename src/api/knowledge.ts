@@ -1,6 +1,6 @@
 import { apiClient } from './client';
 import { API_BASE_URL, ENDPOINTS } from '@/utils/constants';
-import type { KnowledgeUploadResponse, Document, ApiError } from '@/types';
+import type { KnowledgeUploadResponse, Document, ApiError, SelectedPersona } from '@/types';
 import type { DocumentFilters } from '@/utils/filters';
 
 /**
@@ -10,13 +10,18 @@ import type { DocumentFilters } from '@/utils/filters';
 export async function uploadFiles(
   userId: string,
   files: File[],
-  filters: DocumentFilters
+  filters: DocumentFilters,
+  persona: SelectedPersona
 ): Promise<KnowledgeUploadResponse | KnowledgeUploadResponse[]> {
   const formData = new FormData();
   files.forEach((file) => formData.append('files', file));
   formData.append('user_id', userId);
   formData.append('category', filters.category);
-  formData.append('persona', JSON.stringify(filters.persona));
+  formData.append('persona', persona.persona);
+  if (persona.subcategory) {
+    formData.append('subcategory', persona.subcategory);
+  }
+  formData.append('persona_filter', JSON.stringify(filters.persona));
   formData.append('issue_type', JSON.stringify(filters.issue_type));
   formData.append('priority', filters.priority);
   formData.append('doc_weight', filters.doc_weight.toString());
@@ -46,9 +51,15 @@ export async function uploadFiles(
 /**
  * List all uploaded documents for a user
  */
-export async function listDocuments(userId: string): Promise<Document[]> {
+export async function listDocuments(userId: string, persona: SelectedPersona): Promise<Document[]> {
+  const params = new URLSearchParams();
+  params.append('persona', persona.persona);
+  if (persona.subcategory) {
+    params.append('subcategory', persona.subcategory);
+  }
+
   const response = await apiClient.get<Document[]>(
-    ENDPOINTS.KNOWLEDGE_LIST(userId)
+    `${ENDPOINTS.KNOWLEDGE_LIST(userId)}?${params.toString()}`
   );
   // Map file_id to document_id for backward compatibility
   return response.map((doc) => ({
@@ -65,7 +76,8 @@ export async function listDocuments(userId: string): Promise<Document[]> {
  */
 export async function deleteFile(
   fileId: string,
-  userId: string
+  userId: string,
+  persona: string
 ): Promise<{ file_id: string; deleted: number; status: string }> {
   // Extract filename_timestamp part (everything after user_id_)
   // fileId format: demo_user_TECH-600_App_and_Payment_Troubleshooting.md_1769847895
@@ -74,18 +86,28 @@ export async function deleteFile(
     ? fileId.substring(userId.length + 1) 
     : fileId;
   
-  const response = await apiClient.delete(`/knowledge/${userId}/file/${fileIdPart}`);
+  const params = new URLSearchParams();
+  params.append('persona', persona);
+  
+  const response = await apiClient.delete(`/knowledge/${userId}/file/${fileIdPart}?${params.toString()}`);
   return response;
 }
 
 /**
  * Delete all files and chunks from Elasticsearch (global delete)
  */
-export async function deleteAllFiles(): Promise<{
+export async function deleteAllFiles(
+  userId: string,
+  persona: string
+): Promise<{
   deleted: number;
   status: string;
 }> {
-  const response = await apiClient.delete('/knowledge/all');
+  const params = new URLSearchParams();
+  params.append('persona', persona);
+  params.append('user_id', userId);
+  
+  const response = await apiClient.delete(`/knowledge/all?${params.toString()}`);
   return response;
 }
 

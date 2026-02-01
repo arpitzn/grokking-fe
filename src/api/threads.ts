@@ -24,7 +24,17 @@ export async function getMessages(
 }
 
 /**
+ * Delete a conversation and all related records
+ */
+export async function deleteConversation(
+  conversationId: string
+): Promise<{ success: boolean; conversation_id: string }> {
+  return apiClient.delete(`/threads/${conversationId}`);
+}
+
+/**
  * Thread API types
  */
 export type GetThreadsFn = typeof getThreads;
 export type GetMessagesFn = typeof getMessages;
+export type DeleteConversationFn = typeof deleteConversation;

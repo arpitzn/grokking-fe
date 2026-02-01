@@ -97,6 +97,26 @@ class ApiClient {
   }
 
   /**
+   * Generic PATCH request
+   */
+  async patch<T, B = unknown>(endpoint: string, body: B): Promise<T> {
+    const response = await fetch(this.buildUrl(endpoint), {
+      method: 'PATCH',
+      headers: this.defaultHeaders,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const error: ApiError = await response.json().catch(() => ({
+        detail: `HTTP ${response.status}: ${response.statusText}`,
+      }));
+      throw new Error(error.detail);
+    }
+
+    return response.json();
+  }
+
+  /**
    * Generic DELETE request
    */
   async delete<T>(endpoint: string): Promise<T> {

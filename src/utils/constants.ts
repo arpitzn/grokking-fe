@@ -21,6 +21,9 @@ export const ENDPOINTS = {
   KNOWLEDGE_DELETE_FILE: (fileId: string) => `/knowledge/file/${fileId}`,
   KNOWLEDGE_DELETE_ALL: '/knowledge/all',
   HEALTH: '/health',
+  USERS_BY_PERSONA: '/users/by-persona',
+  MEMORY_LIST: (userId: string) => `/memory/${userId}`,
+  MEMORY_DELETE: (memoryId: string) => `/memory/${memoryId}`,
 } as const;
 
 // Message count for summarization trigger (matches backend)

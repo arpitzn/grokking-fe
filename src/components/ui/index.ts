@@ -15,4 +15,5 @@ export {
 export { ErrorBoundary } from './ErrorBoundary';
 export { Toast, ToastContainer, toast, type ToastProps, type ToastType } from './Toast';
 export { Tooltip, type TooltipProps } from './Tooltip';
+export { MemoryTooltip, type MemoryTooltipProps } from './MemoryTooltip';
 export { ConfirmDialog, type ConfirmDialogProps } from './ConfirmDialog';

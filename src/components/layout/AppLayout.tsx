@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import { ThreadSidebar } from '@/components/threads';
 import { ChatPage } from '@/components/chat';
 import { KnowledgePanel } from '@/components/knowledge';
+import { EscalatedTicketsPage } from '@/components/escalated-tickets';
+import { OrdersPage } from '@/components/orders';
 import { useAppStore } from '@/store/appStore';
 
 export function AppLayout() {
   const setIsMobile = useAppStore(state => state.setIsMobile);
+  const currentView = useAppStore(state => state.currentView);
 
   // Handle responsive breakpoints
   useEffect(() => {
@@ -23,16 +26,22 @@ export function AppLayout() {
 
   return (
     <div className="flex h-screen bg-zinc-50 overflow-hidden">
-      {/* Thread Sidebar */}
-      <ThreadSidebar />
+      {/* Thread Sidebar - only show for chat view */}
+      {currentView === 'chat' && <ThreadSidebar />}
 
-      {/* Main Chat Area */}
+      {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0">
-        <ChatPage />
+        {currentView === 'chat' ? (
+          <ChatPage />
+        ) : currentView === 'escalated-tickets' ? (
+          <EscalatedTicketsPage />
+        ) : (
+          <OrdersPage />
+        )}
       </main>
 
-      {/* Knowledge Panel (Slide-out) */}
-      <KnowledgePanel />
+      {/* Knowledge Panel (Slide-out) - only show for chat view */}
+      {currentView === 'chat' && <KnowledgePanel />}
     </div>
   );
 }

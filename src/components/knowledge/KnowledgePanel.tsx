@@ -9,10 +9,13 @@ export function KnowledgePanel() {
   const isOpen = useAppStore(state => state.isKnowledgePanelOpen);
   const documents = useAppStore(state => state.documents);
   const isUploading = useAppStore(state => state.isUploadingDocument);
+  const selectedPersona = useAppStore(state => state.selectedPersona);
 
   const togglePanel = useAppStore(state => state.toggleKnowledgePanel);
   const fetchDocuments = useAppStore(state => state.fetchDocuments);
   const uploadDocuments = useAppStore(state => state.uploadDocuments);
+
+  const canUpload = selectedPersona.persona !== 'end_customer';
 
   // Fetch documents when panel opens (only if data is stale)
   useEffect(() => {
@@ -47,16 +50,20 @@ export function KnowledgePanel() {
       title="Knowledge Base"
     >
       <div className="space-y-6">
-        {/* Upload section */}
-        <div>
-          <h3 className="text-sm font-medium text-zinc-700 mb-3">
-            Upload Document
-          </h3>
-          <FileUploader onUpload={handleUpload} isUploading={isUploading} />
-        </div>
+        {/* Upload section - hidden for End Customer */}
+        {canUpload && (
+          <>
+            <div>
+              <h3 className="text-sm font-medium text-zinc-700 mb-3">
+                Upload Document
+              </h3>
+              <FileUploader onUpload={handleUpload} isUploading={isUploading} />
+            </div>
 
-        {/* Divider */}
-        <hr className="border-zinc-200" />
+            {/* Divider */}
+            <hr className="border-zinc-200" />
+          </>
+        )}
 
         {/* Document list */}
         <DocumentList documents={documents} />

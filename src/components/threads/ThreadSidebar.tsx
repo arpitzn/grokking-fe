@@ -17,11 +17,19 @@ export function ThreadSidebar() {
   const selectThread = useAppStore(state => state.selectThread);
   const createNewChat = useAppStore(state => state.createNewChat);
   const toggleSidebar = useAppStore(state => state.toggleSidebar);
+  const userId = useAppStore(state => state.userId);
+  const isResolvingUser = useAppStore(state => state.isResolvingUser);
 
-  // Fetch threads on mount
+  // Fetch threads when userId changes (only if resolved)
   useEffect(() => {
+    // Only fetch if user is resolved and not still resolving
+    if (!userId || isResolvingUser) {
+      return;
+    }
+    
     fetchThreads();
-  }, [fetchThreads]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, isResolvingUser]); // Only depend on userId and resolving state
 
   const handleSelectThread = (threadId: string) => {
     selectThread(threadId);
