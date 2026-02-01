@@ -21,6 +21,7 @@ export interface ChatRequest {
   user_id: string;
   conversation_id?: string;
   message: string;
+  persona?: string;
 }
 
 export interface ChatStreamEvent {
@@ -169,7 +170,13 @@ export interface Memory {
 }
 
 // Order types
-export type OrderStatus = 'placed' | 'confirmed' | 'in_transit' | 'delivered' | 'cancelled' | 'refunded';
+export type OrderStatus =
+  | 'placed'
+  | 'confirmed'
+  | 'in_transit'
+  | 'delivered'
+  | 'cancelled'
+  | 'refunded';
 
 export interface OrderEvent {
   timestamp: string;

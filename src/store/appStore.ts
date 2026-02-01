@@ -411,7 +411,7 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     sendMessage: async (content: string) => {
-      const { userId, currentThreadId, messages } = get();
+      const { userId, currentThreadId, messages, selectedPersona } = get();
 
       // Add user message to state immediately
       const userMessage: Message = {
@@ -449,6 +449,7 @@ export const useAppStore = create<AppState>((set, get) => {
             user_id: userId,
             conversation_id: currentThreadId || undefined,
             message: content,
+            persona: selectedPersona.persona,
           },
           // onChunk callback
           chunk => {
